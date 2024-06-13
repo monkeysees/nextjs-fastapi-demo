@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.8
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+  - repo: local
+    hooks:
+      - id: node-lint
+        name: next-lint
+        language: system
+        entry: npm run lint
+        pass_filenames: false
+        always_run: true
+      - id: node-format
+        name: prettier
+        language: system
+        entry: npm run prettify
+        pass_filenames: false
+        always_run: true
