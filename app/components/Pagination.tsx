@@ -1,54 +1,72 @@
-export default function Pagination({
-  currentPage,
-  maxPage,
-}: {
-  currentPage: number;
-  maxPage: number;
-}) {
-  const prevArrowBtn = (
-    <button
-      className={`join-item btn ${currentPage === 0 ? "disabled" : null}`}
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const prevPageBtn = (
+    <Link
+      href={createPageURL(currentPage > 1 ? currentPage - 1 : 1)}
+      className={`join-item btn ${currentPage === 1 ? "btn-disabled" : null}`}
     >
       «
-    </button>
+    </Link>
   );
   const firstPageBtn = (
-    <button
-      className={`join-item btn ${currentPage === 0 ? "btn-active" : null}`}
+    <Link
+      href={createPageURL(1)}
+      className={`join-item btn ${currentPage === 1 ? "btn-active" : null}`}
     >
       1
-    </button>
+    </Link>
   );
   const beginningEllipsis =
-    currentPage > 1 ? (
-      <button className="join-item btn btn-disabled">…</button>
+    currentPage > 2 ? (
+      <div className="join-item btn btn-disabled">…</div>
     ) : null;
   const currentIntermediatePage =
-    currentPage > 0 && currentPage < maxPage ? (
-      <button className="join-item btn btn-active">{currentPage + 1}</button>
+    currentPage > 1 && currentPage < totalPages ? (
+      <Link
+        href={createPageURL(currentPage)}
+        className="join-item btn btn-active"
+      >
+        {currentPage}
+      </Link>
     ) : null;
   const endingEllipsis =
-    maxPage > 1 && currentPage < maxPage - 1 ? (
-      <button className="join-item btn btn-disabled">…</button>
+    totalPages > 2 && currentPage < totalPages - 1 ? (
+      <div className="join-item btn btn-disabled">…</div>
     ) : null;
   const lastPageBtn =
-    maxPage > 0 ? (
-      <button
-        className={`join-item btn ${currentPage === maxPage ? "btn-active" : null}`}
+    totalPages > 1 ? (
+      <Link
+        href={createPageURL(totalPages)}
+        className={`join-item btn ${currentPage === totalPages ? "btn-active" : null}`}
       >
-        {maxPage + 1}
-      </button>
+        {totalPages}
+      </Link>
     ) : null;
   const nextPageBtn = (
-    <button
-      className={`join-item btn ${currentPage === maxPage ? "disabled" : null}`}
+    <Link
+      href={createPageURL(
+        currentPage === totalPages ? totalPages : currentPage + 1,
+      )}
+      className={`join-item btn ${currentPage === totalPages ? "btn-disabled" : null}`}
     >
       »
-    </button>
+    </Link>
   );
   return (
     <div className="join">
-      {prevArrowBtn}
+      {prevPageBtn}
       {firstPageBtn}
       {beginningEllipsis}
       {currentIntermediatePage}

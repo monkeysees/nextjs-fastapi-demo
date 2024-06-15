@@ -1,3 +1,6 @@
+# mongodb docker
+/mongodb_data
+
 # testing
 /coverage
 
