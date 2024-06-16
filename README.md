@@ -6,6 +6,12 @@ Install the dependencies:
 npm install && poetry install
 ```
 
+Start MongoDB:
+
+```bash
+docker compose up
+```
+
 Run the development server:
 
 ```bash
