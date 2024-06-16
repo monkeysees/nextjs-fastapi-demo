@@ -30,18 +30,19 @@ export default function BooksGrid() {
 
   return (
     <div>
-      <div className="container grid grid-cols-4 gap-8 mb-8">
+      <div className="container grid grid-cols-[repeat(4,_minmax(8rem,_1fr))] auto-rows-[24rem] gap-8 mb-8">
         {booksWithPagination.books.map((b) => (
           <div
             className="card card-compact card-bordered bg-base-100"
             key={b.title}
           >
-            <figure className="">
+            <figure className="h-2/3">
               <Image
                 width={b.cover.width}
                 height={b.cover.height}
                 src={b.cover.filepath}
                 alt="Cover image"
+                className="object-cover h-full w-auto"
               />
             </figure>
             <div className="card-body">
