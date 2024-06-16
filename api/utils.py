@@ -1,3 +1,6 @@
+from fastapi import UploadFile
+import aiofiles
+from pathlib import Path
 from motor.motor_asyncio import AsyncIOMotorCollection
 from typing import Any, List, Mapping, Sequence, TypedDict
 from api.models import Book, PaginatedBooks
@@ -42,3 +45,25 @@ async def get_paginated_books(
         "total_pages": total_pages,
         "books": result["books"],
     }
+
+
+async def add_book(collection: AsyncIOMotorCollection, book_data: Book) -> Book:
+    new_book_creation_result = await collection.insert_one(book_data.model_dump())
+    new_book = await collection.find_one({"_id": new_book_creation_result.inserted_id})
+    if not new_book:
+        raise Exception("Created document not found!")
+    return new_book
+
+
+async def upload_file(dest: str, file: UploadFile):
+    if not file.filename:
+        raise Exception("Filename must not be empty")
+
+    upload_dir = Path(dest)
+    upload_dir.mkdir(parents=True, exist_ok=True)
+    filepath = upload_dir / file.filename
+
+    async with aiofiles.open(filepath, "wb") as buffer:
+        await buffer.write(await file.read())
+
+    return filepath

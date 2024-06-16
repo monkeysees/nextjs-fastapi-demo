@@ -11,6 +11,7 @@ repos:
     rev: v1.10.0
     hooks:
       - id: mypy
+        additional_dependencies: ['types-aiofiles']
   - repo: local
     hooks:
       - id: node-lint
@@ -24,4 +25,5 @@ repos:
         language: system
         entry: npm run prettify
         pass_filenames: true
+        files: '\.(ts|tsx|js|jsx|cjs|mjs|json)$'
         always_run: true

@@ -14,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="emerald">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className="container mx-auto px-32 pt-16 pb-32 ">{children}</main>
+      </body>
     </html>
   );
 }

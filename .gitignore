@@ -1,4 +1,5 @@
-# mongodb docker
+# dev data
+/public/cover_images
 /mongodb_data
 
 # testing

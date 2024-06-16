@@ -19,11 +19,17 @@ class PyObjectId(ObjectId):
         field_schema.update(type="string")
 
 
+class Cover(TypedDict):
+    filepath: str
+    width: int
+    height: int
+
+
 class Book(BaseModel):
-    id: Optional[PyObjectId] = Field(alias="_id")
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     title: str
     description: str
-    cover: str
+    cover: Cover
 
     class Config:
         populate_by_name = True

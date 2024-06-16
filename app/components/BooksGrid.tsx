@@ -37,7 +37,12 @@ export default function BooksGrid() {
             key={b.title}
           >
             <figure className="">
-              <Image width={400} height={600} src={b.cover} alt="Cover image" />
+              <Image
+                width={b.cover.width}
+                height={b.cover.height}
+                src={b.cover.filepath}
+                alt="Cover image"
+              />
             </figure>
             <div className="card-body">
               <h2 className="card-title items-start text-ellipsis overflow-hidden">
