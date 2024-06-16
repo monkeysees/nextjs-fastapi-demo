@@ -59,7 +59,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
       href={createPageURL(
         currentPage === totalPages ? totalPages : currentPage + 1,
       )}
-      className={`join-item btn ${currentPage === totalPages ? "btn-disabled" : null}`}
+      className={`join-item btn ${currentPage === totalPages || totalPages === 0 ? "btn-disabled" : null}`}
     >
       »
     </Link>

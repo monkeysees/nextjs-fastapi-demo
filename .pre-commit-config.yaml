@@ -23,5 +23,5 @@ repos:
         name: prettier
         language: system
         entry: npm run prettify
-        pass_filenames: false
+        pass_filenames: true
         always_run: true
