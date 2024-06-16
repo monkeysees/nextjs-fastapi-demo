@@ -12,6 +12,12 @@ Start MongoDB:
 docker compose up
 ```
 
+Create `.env.local` file:
+
+```bash
+cp .env.example .env.local
+```
+
 Run the development server:
 
 ```bash
